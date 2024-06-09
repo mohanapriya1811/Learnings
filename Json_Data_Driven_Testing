@@ -1,0 +1,64 @@
+{
+
+"username": "Demosalesmanager",
+"password":"crmsfa",
+
+"createlead":[{
+"companayName": "Testleaf",
+"firstName": "Hari",
+"lastName": "R"
+},
+{
+"companayName": "Queagle",
+"firstName": "Aravindh",
+"lastName": "R"
+}]
+}
+
+import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+
+import java.util.Map;
+import java.util.Map.Entry;
+
+
+JsonObject Data Driven Testing:
+------------------------------
+
+JsonParser json = new JsonParser();
+
+FileReader reader = new FileReader(filePath);
+
+Object obj = json.parse(reader);
+
+JsonObject jsonObject = (JsonObject) obj;
+
+JsonArray jsonArray = (JsonArray) jsonObject.get("createlead");
+
+Object[][] data = new Object[jsonObject.size()][1];
+
+
+
+Map<Object, Object> map = new HashMap();
+for(int j = 0; j<jsonArray.size(); j++){
+JsonObject object = (JsonObject) jsonArray.get(j);
+
+Map<Entry<String, JsonElement>> ele = object.entryset();
+
+for( Entry<String, JsonElement> jsonEle : ele){
+String key = jsonEle.getKey();
+String value = jsonEle.getValue().getAsString();
+map.put(key, value);
+map.put("username", jsonObject.get("username"));
+map.put("password", jsonObject.get("password"));
+
+}
+}
+data[i][1] = map;
+}
+
+}
+}
+

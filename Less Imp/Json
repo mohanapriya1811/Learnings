@@ -1,0 +1,86 @@
+Set<Entry<String, JsonElement>> jsonElement = jsonObject.entrySet();
+		String key = null;
+		String asString = null;
+		
+		for(Entry<String, JsonElement> ele : jsonElement) {
+		
+		if(ele.getKey().equals("createlead")){
+			JsonArray jsonArray = ele.getValue().getAsJsonArray();
+			for(int i = 0; i<jsonArray.size(); i++) {
+				JsonObject jsonObj = (JsonObject) jsonArray.get(i);
+				Set<Entry<String, JsonElement>> jsonArrayEle = jsonObj.entrySet();
+				for(Entry<String, JsonElement> element:jsonArrayEle) {
+					key = element.getKey();
+					asString = element.getValue().getAsString();
+					map.put(key, asString);
+				}
+				data[i][0] = map;
+			}
+			
+		}
+		else {
+				key = ele.getKey();
+				asString = ele.getValue().getAsString();
+				map.put(key, asString);
+			}
+		}
+		System.out.println(map);   
+		
+		
+				
+		
+		
+		
+			
+			/*
+			 * JsonObject jObj = (JsonObject) jsonObject.get(i);
+			 * 
+			 * Set<Entry<String, JsonElement>> jsonElement = jObj.entrySet();
+			 * 
+			 * for(Entry<String, JsonElement> ele:jsonElement) { String key = ele.getKey();
+			 * String value = ele.getValue().getAsString();
+			 * 
+			 * map.put(key, value);
+			 */
+			  
+		
+				
+				
+				
+				
+			
+				 
+			  //data[i][0] = map;
+			  //System.out.println(map); 
+			  //String uName= jObj.get("Username").getAsString();
+			  //System.out.println(jObj);
+			  // System.out.println(key); // System.out.println(value);
+			  //System.out.println(map);
+			  
+			
+			 
+		}
+	
+		//return data;
+	
+	
+
+	
+
+	/*
+	 * System.out.println(jsonArray.get("username"));
+	 * System.out.println(jsonArray.get("password")); JsonElement jsonElement =
+	 * jsonArray.get("username"); JsonElement jsonElement2 =
+	 * jsonArray.get("createlead"); JsonArray jArr = (JsonArray) jsonElement2;
+	 * 
+	 * 
+	 * Set<Entry<String, JsonElement>> jKey = jArr.entrySet(); for(Entry<String,
+	 * JsonElement> ele : jKey) { System.out.println(ele.getKey());
+	 * System.out.println(ele.getValue());
+	 * 
+	 * 
+	 * System.out.println(jArr.get(i)); JsonObject object = (JsonObject)jArr.get(i);
+	 * object.entrySet();
+	 * 
+	 * Set<Entry<String, JsonElement>> jKey = object.entrySet();
+	 * for(Entry<String,JsonElement> ele : jKey)

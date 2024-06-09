@@ -1,0 +1,55 @@
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.util.map;
+
+
+
+public class ReadDataDB{
+
+public static Object[][] getData() throws ClassNotFoundException, SQLException{
+
+String jdbc_driver = "com.mysql.cj.jdbc.Driver";
+String jdbc_url = "jdbc:mysql://localhost:3306/sys";
+
+
+String userName = "root";
+String password = "Scope@123";
+
+Class.forName(jdbc_driver);
+
+Connection conn = DriverManager.getConnection(jdbc_url, userName, password);
+
+Statement stmt = conn.createStatement();
+
+String sql = "Select * From Testleaf.CompanayDetails";
+
+
+ResultSet result = stmt.executeQuery(sql);
+
+result.last();
+
+int row = result.getRow();
+
+Object[][] data = new Object[result.getRow())[1];
+
+Map<Object, Object> map = new HashMap<>();
+result.beforeFirst();
+
+while(result.next()){
+
+map.put("username", result.getString("username");
+map.put("password", result.getString("pwd");
+map.put("companyName", result.getString("companyName");
+
+map.put("firstname", result.getString("firstname");
+map.put("lastname", result.getString("lastname");
+
+data[result.getRow()-1][0] = map;
+}
+
+return data;
+}
+
+}
+}

@@ -1,0 +1,395 @@
+API:
+---
+
+    Application Programming Interface:
+    ---------------------------------
+            - API sends a Request gets a Response From Database
+            - Hotel -----> Waiter---------> Chef
+              Client       API              Server
+
+            - BookMyShow (API Request) ------------- Satyam Cinemas
+                                       ------------- PVR Cinemas   
+
+    Postman:  API Development
+    Rest Assured: For Testing an API using Framework
+    Swagger/Postman: API Documentation
+
+Why API Automation is growing in demand?
+----------------------------------------
+    ---API Based Apps   ---> Is it practically possible to test all functionalities manually? 
+
+                        Amazon:
+                            Mobile: UI Differs  Functionalities are Same driven by API  (Testing the API is comparatively than UI)
+                            Chrome: UI Differs
+
+    ---Faster          ---> In Selenium     --------- There is no rendering UI not involved -- API Running Behind the UI
+                                Chromium WebKit
+                                 Host Process
+                                Application (Host Process)
+                                Application (Render Process)
+                               ---------------------------- API Boundary
+                                WebKit
+                                WebCore
+                                JS Engine
+                                Render Process
+
+    ---Easy and Isolated    Browser Specific , Elements Challenges
+    ---Less Failures    Directly Used    
+    ---Easy Data Generation - Fraction of Second can create data
+    
+MICohn's:
+--------
+
+        
+
+                       UI Automation/   30-40 %
+                       Service Test/    60 - 70%
+                       Unit Test/      
+                
+
+Architecture:
+------------
+        REST    --- Respresentation State Transfer  -- Less Data Intensive Between two WebServices
+        GraphQL --- Graphical Query Language  -- High Data Intensive -- Facebook, GitHub -- Data Query and Manipulation Language
+
+    Monolithic Architecture:    UI  -----> Business Layer -----> Data Access Layer   ----------> Database   Example: IRCTC
+                                Problem: Highly not scalable
+    
+    Microservices:              UI  ----- MicroServicesOne -------- DB   Example:    Uber -- Driver has Different Functionalities
+                                                                                        Passenger has Differenet Functionalities  
+                                    ----- MicroServicesTwo -------- DB                  To Handle, Every thing becomes separate Microservices
+
+
+    Integration between two Microservices Contract Document helps to perform Integration
+    Contract Driven Testing. Using Stubs to mimic the functionalities
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+URL --  Uniform Resource Locator which is used to locate the resouces in the web
+URI --  It is string identifies to identify the resources that are in string format
+
+Request compostion of Headers(Authorization) No Auth Basic, OAuth, Token + Parameters(Query Filters, Form, Path {{}} + EndPoints  (Server Name + Port + Resources)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Headers:
+--------
+
+    Content Type : Request Data Format
+    Accept       : Response Data Format
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Parameters
+----------
+
+        Headers
+        Query   -- Applicable for Get, Post, Delete Preferabbly used by Get
+        Form    -- Body (Post, Put, Patch) Get does not use Form Parameter
+        Path    -- {{}}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Authorization:
+-------------
+        No Auth : 
+        Basic Auth:
+        OAuth: Example: Hotel Room Access Card
+        Token: JWT Tokens API Key: One of our collegues goes on leave will you share your password with him. Instead generating a token with expiry date shared with him.
+
+
+    Preemptive and Non Preemptive:
+
+        Preemptive should privide authorization details along with the request.
+
+        Non Preemptive: Send a Request to the Service with No Auth. If Serve reponses with 404. Then again send a request with Basic Authorization
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Status Codes:
+-------------
+
+    100 - Informations
+    200 - Success
+    300 - Redirects
+    400 - Client Error
+    500 - Server error
+
+    200 - OK
+    201 - Created
+    202 - Accepted
+    204 - No Content
+
+    300 - Multiple Choices
+    301 - Moved Permanently
+    302 - Found (From Moved Temporarilly)
+    303 - See Other
+    308 - Permanent Redirect
+    307 - Temporary Redirect
+
+    400 - Bad Req
+    401 - Unauthorized
+    402 - Payment Required
+    403 - forbidden
+    404 - Not Found
+
+    500 - Internal Server Error
+    502 - Bad GateWay
+    503 - Service Not Available
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+HTTP Methods/CRUD Operation:
+-----------------------------
+
+    Get     ----> Select * From TableName;
+    Post    ----> Insert into TableName Values();
+    Put     ----> Update tableName Set column="value"; Entire Records Updation
+    Patch   ----> Particular Field Update 
+    Delete  ----> Delete From tableName;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Response Validation:
+--------------------
+        pm.test("Validate Status Code", function(){
+            
+            pm.response.to.have.status(200);
+        });
+
+         pm.test("Validate Status Code", function(){
+            
+            pm.expect(pm.response.to.have.status(200));
+        });
+
+        pm.test("Validate Status Code", function(){
+            
+            pm.expect(pm.response.to.have.status("Created"));
+        });
+
+
+        pm.test("Validate Expect Status Code", function(){
+            
+            pm.expect(pm.response.code).to.be.oneof(200, 201);
+        });
+
+         pm.test("Validate Expect Response Time", function(){
+            
+            pm.expect(pm.response.responseTime).to.be.below(200);
+        });
+
+    ------------------------------------------------------------------------------------------------------------
+
+        Headers:
+        -------
+         pm.test("Validate Expect Status Code", function(){
+            
+            pm.response.to.have.header('Content-Type');
+        });
+
+         pm.test("Validate Expect Status Code", function(){
+            
+            pm.expect(pm.response.headers.get('Content-Type')).to.eql("application/json");
+        });
+    -------------------------------------------------------------------------------------------------------------------
+
+        Cookie:
+        -------
+         
+        pm.expect(pm.cookies.has("session-id")).to.be.true;
+            
+        pm.expect(pm.cookies.has().get("session_id").to.eql("ad3se3ss8sg7sg3");
+
+    --------------------------------------------------------------------------------------------------------------------------
+
+        Body:
+        ------
+
+        pm.reponse.to.have.body("OK");
+        pm.reponse.to.have.body('("success"=trure');
+
+
+        pm.expect(pm.response.text()).to.include("Order Placed");
+        
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+newman run Week2Day1.postman_collection.json -e "Testing Environment.postman_environment.json" -g workspace.postman_globals.json -d ServiceNowData.csv -r htmlextras
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+API: 
+                                    API Request
+        Computer                ------------------>   Printer
+        (Driver S/W)            <------------------  
+                                     Response
+ 
+WebServices: 
+                                  Rest API HTTP Request
+         Application One        -------------------->      Application Two
+                                <--------------------
+                                    HTTP Respnse
+
+MicroServices
+
+                                                        []  []  []  []
+
+        Application             -------------------->   []  []  []  []
+                                <--------------------
+                                     HTTP Response      []  []  []  []
+
+
+All WebServices API's are API's. All APIs are not WebServices
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+PayLoad:
+-------
+
+    SOAP VS REST
+    ------------
+
+            PayLoad Weight :  1000 + Data Passing Weight like XML 100   : 1100
+
+      Whereas Rest:
+      ------------
+            Keeping the Intial Weight Lesser: 100 + Data Weight Json/XML 100 : 200
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Rest API:
+---------
+
+    Libraries Used:
+    --------------
+        rest-assured-io;
+        testng;
+
+
+Get Incident:
+------------
+    @Test
+    public void getIncident(){
+    
+        RestAssured.baseURI = "https://dev210493.service-now.com/api/now/table/incident";
+        RestAssured.authentication = RestAssured.basic("username", password");
+    
+
+        Response response = RestAssured.given().log().all()
+                            .queryParam("sysparm_fields", number, sys_id, category")
+                            .when()
+                            .get();
+
+        reponse.prettyPrint();
+        List<String> listSysID = reponse.jsonPath().getList("result.sys_id");
+        System.out.println(listSysID.get(0));
+
+
+    Given() -- PreCondition -- given().log().all() -- To Display all the Precondition History in the Console for Reference
+    When()  -- Test Condition   
+    Then()  -- Expected Result -- then().log().all -- To Display all the PostCondition History in the Console for Reference
+
+    Rest Assured : Internally Uses a Language called groovy for sending the request and getting the response
+
+    HamCrest Library which is used to perform validation
+
+
+    getList --- > For Array of Json Objects
+    get     --- > For a Json Object
+
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+     @Test
+    public void getIncident(){
+    
+        RestAssured.baseURI = "https://dev210493.service-now.com/api/now/table/incident";
+        RestAssured.authentication = RestAssured.basic("username", password");
+    
+
+        Response response = RestAssured.given().log().all()
+                            .queryParam("sysparm_fields", number, sys_id, category")
+                            .accept(ContentType.xml)
+                            .when()
+                            .get();
+
+        reponse.prettyPrint();
+        List<String> listSysID = reponse.xmlPath().getList("reponse.result.sys_id");
+        System.out.println(listSysID.get(0));
+
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    QUERYPARAMS:
+    -----------
+
+    Map<String , String> map = new HashMap<>();
+
+    map.put("sysparm_fields", number, sys_id, category");
+    map.put("category", "software");
+
+    
+
+      @Test
+    public void getIncident(){
+    
+        RestAssured.baseURI = "https://dev210493.service-now.com/api/now/table/incident";
+        RestAssured.authentication = RestAssured.basic("username", password");
+    
+
+        Response response = RestAssured.given().log().all()
+                            .queryParams(map)
+                            .accept(ContentType.xml)
+                            .when()
+                            .get();
+
+        reponse.prettyPrint();
+        List<String> listSysID = reponse.xmlPath().getList("reponse.result.sys_id");
+        System.out.println(listSysID.get(0));
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Cucumber
+--------
+
+Create_Incident.feature
+
+    Feature: User should be able to Create an Incident in Service Now Application
+
+    Scenario: Verify if the user able to create an incident with body in Service Now Application
+
+    Given Set the Endpoint for the Service Now Application
+    Given Set the Authorization for the Service Now Application
+    Given Set the QueryParam for the Create Incident Request
+            |sysparm_fields|number, sys_id, category|
+            |category|software|
+    Given Set the Content Type as Json for the Create Incident Request
+    Given Set the Accept as Json for the Create Incident Request
+    Given Set the Body with Input File as 'Create_Incident.json' for the Create Incident request
+    When Send the Post Request
+    Then Validate the Status Code of the Post Request
+    And Validate the Response which has number starts with INC
+
+List<Header> list = new ArrayList<Header>();
+
+Map<String, String>() map = table.asMaps();
+
+Set<Entry<String, String>> entries = map.entrySet();
+
+for(Entry<Sring, String> setString: entries){
+    list.add(new Header(setString.getKey(), setString.getValue());
+  }
+
+Headers head = new Headers(list);
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+	  
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,78 @@
+Exception:
+---------
+
+    Abnormal Behavior that stops the execution of the program
+    
+    Throwable is the super of class of exception
+    
+    All the Selenium Exceptions are Checked Exceptions
+
+Checked and Unchecked Exceptions:
+----------------------------------
+
+    Checked Exceptions: Compile Time Exception
+                            Compiler tells the statement might throw an exceptions
+                                  Use : throws keyword to declare an exception in the method
+
+                        Ex: FileReader file = new FileReader("./reports/result.html"); -- FileNotFoundException
+                            Class.forName(jdbc_driver); ClassNotFoundException
+                            Connection conn = DriverManager.getConnection(jdbc_url, username, password); SQLException java.sql.Connection
+                            Spreadsheet spread = new Spreadsheet(new File("filePath")); FileNotFoundException com.github.miachm.sods.SpreadSheet;
+                            
+
+    Unchecked Exceptions:
+                        
+                    RunTime Exceptions
+                        User is not aware of the statement that is going to throw an exception
+                            Use: try and catch blocks are used to handle the exceptions
+                                 stops the execution
+
+
+                try: to have the statement that is expected to throw an exception
+                catch: to catch the exception that is thrown by try block
+                        catch block handles the exception
+
+                    
+                try can have no of catch blocks. atleast of one catch block is mandate. try and catch are interdependent cant have one with another
+
+                finally block is executed irrepective of the exception is handled or not RunTime.getRuntime.exec("taskkill/ -f / -im chromedriver.exe");
+
+
+                Example:
+                    
+                        class Sample{
+                
+                                public static int divide(int num1, int num2){
+                                    int result = 0;
+                                    if(num1>num2){
+                                    result = num1 /num2;
+                                    System.out.println(result);
+                                    }
+                                    else{
+                                        throw new CreatedException("Invalid Number num2 is greater than num1);
+                                    }
+                                }
+                            
+                            public static void main(String[] args){
+                                divide(10, 5);
+                             }
+
+                
+                class CreateException extends RunTimeException{
+                    
+
+                    public CreateException(String message){
+                        super(message);
+                    }
+                }
+        
+
+
+
+
+
+
+
+
+
+

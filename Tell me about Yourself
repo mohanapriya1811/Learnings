@@ -1,0 +1,30 @@
+Tell me about yourself:
+
+Hi, I am Mohanapriya V. I have 4 years of experience in Manual and Automation Testing. I worked as Senior Consultant at Datamatics Global Services Pvt ltd.
+I am currently on Maternity Break. Just started resuming my career.
+
+With respect to Automation Experience: I have worked in Telecom project. As an automation engineer My roles and responsibilities were
+1. Understanding the framework and we have used Page object model as Design Pattern.
+2. Participation in the brain storming session to dicuss about the methods and advancement in the framework
+3. Creating the object repositories for each page as java class with resuable methods and webelemenets related to the application page
+4. Creating the Test Scripts for the regression testcases and debugging the scripts
+5. Running the Regression Test Suite against the new build using TestNG
+6. Logging the defects in JIRA for failed testcases
+7. Reruning the failed testcases using testng-failed.xml file Performing the regression on the same build to ensure the stability of the application
+8. Maintaining the Test Management and Defect Tracking Tool based on the Execution
+9. Sharing the Test Execution status across the team
+
+With respect to Manual Experience: I have worked as Software Test Engineer at American Technology consulting Pvt ltd. The Domain is e-Learning and e-commerce
+
+
+1. Understanding the requirement specification document and user stories
+2. Participating in the grooming calls and discussing about the user stories
+3. In the sprint planning meeting, stories were picked by giving story points
+4. Drafting Test Scenarios and shared among the team get them approved
+5. Deriving Test cases from Test Scenarios in the test management tool Testrail
+6. Once the build was released Performing basic Smoke Testing on the released build to ensure the build stability
+7. Running the test cases against build and maintain the execution status in the tool 
+8. For failed testcases, logging defects in the JIRA and assigning it to the developer
+9. For fixed defects, retesting performed and updating the status in the JIRA Ticket
+10. For Different Environment above process was repeated
+

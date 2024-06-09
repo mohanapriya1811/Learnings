@@ -1,0 +1,37 @@
+Interview Mock:
+---------------
+
+DOD: Definition Of Done
+-----------------------
+   List of checks needs to be done before closing the user stories
+
+ROI Automation Perspective:
+---------------------------
+    1. Time and Cost
+    2. Quality of the Product
+
+5 Factors to be Considered in Automation:
+-----------------------------------------
+
+    1. Scope -- Whether we have any of any automation in our application
+    2. Objective -- Why do we need to do an automation
+    3. Usage of application: For what purpose we are doing automation. How does it going to help
+    4. Actions reccommended:
+    5. Repetive and Manual Intervention Reduction
+
+Top-Casting Upcasting:
+---------------------
+
+    Car Class (Parent)
+        Autoparking Class (Child)
+
+    int i =10;
+
+    long l = (long) i;
+
+    Car car = (Car) new Autoparking();
+    
+    Car car = new AutoParking(); //Upcasting
+
+    Autoparking auto = 
+    

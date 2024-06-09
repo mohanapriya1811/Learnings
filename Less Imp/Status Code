@@ -1,0 +1,27 @@
+100 - Informations
+200 - Success
+300 - Redirects
+400 - Client Error
+500 - Server error
+
+200 - OK
+201 - Created
+202 - Accepted
+204 - No Content
+
+300 - Multiple Choices
+301 - Moved Permanently
+302 - Found (From Moved Temporarilly)
+303 - See Other
+308 - Permanent Redirect
+307 - Temporary Redirect
+
+400 - Bad Req
+401 - Unauthorized
+402 - Payment Required
+403 - forbidden
+404 - Not Found
+
+500 - Internal Server Error
+502 - Bad GateWay
+503 - Service Not Available

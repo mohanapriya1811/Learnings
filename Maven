@@ -1,0 +1,223 @@
+Maven:
+----
+
+    Compiler Plugin:
+        prefix: compiler
+        goal:compile, testCompile
+    Surefire Plugin
+        prefix: surefire
+        goal: test
+    Assembly Plugin
+        prefix: assembly
+        goal: single
+
+    To Configure any Properties:
+    ----------------------------
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11<maven.compiler.target>
+    </properties>
+    
+    Check for the expression. Hover on the attribute Source ----> pops up <Expressions> ${maven.compiler.source} --> <sourec>${maven.compiler.source}</source>
+
+    ------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    Configuration: Compiler:
+
+        <configuration>
+        <sourec>11</source>
+        <target>11</target>
+        </configuration>
+
+    Surefire:
+    ---------
+
+        <configuration>
+            <suiteXmlFiles>
+                <suiteXmlFile>testng.xml</suiteXmlFile>
+            <suiteXmlFiles>
+        </configuration
+
+    Assembly:
+    --------
+
+        <configuration>
+            <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+            <descriptorRefs>
+            <archive>
+                <manifest>
+                    <mainClass>testcases.Executable</mainClass>
+                </manifest>
+            </archive>
+          </configuration
+
+        <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <gaol>single</goal>
+                    <goal>
+                </execution>
+        </executions>
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    Maven LifeCycle:
+    ---------------
+        1. Clean
+        2. Compile
+        3. Test
+        4. Package
+        5. Install
+
+     Goals:
+    -------
+
+        testCompile
+        clean
+        genrate-sources
+        clean compile
+        install
+        compile
+        test
+        package
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    Running Maven CLI Execution
+    ----------------------------
+        mvn clean 
+        mvn clean compile
+        mvn test
+        mvn package
+        mvn install
+    
+     mvn compiler:compile
+     mvn surefire:test
+     mvn assembly:single
+
+    For Parameterization
+    --------------------
+
+        TestNG:
+        ------
+                mvn surefire:test -Dtestng.xml=testng_actual.xml
+
+        Cucumber:
+        --------
+
+                mvn surefire:test -DCucumber.filter.tags="@Smoke"
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Allure Report:
+-------------
+
+    Dependencies:
+    -------------
+        
+           1. allure-rest-assured
+           2. allure-testng
+           3. allure-cucumber7jvm or cucumber-java
+
+    In Build:
+    ---------
+        Add Surefire Plugin
+            Maven Surefire Plugin with dependencies
+                <dependicies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+						<artifactId>aspectjweaver</artifactId>
+						<version>${aspectj.version}</version>	
+					</dependency>
+                </dependencies> 
+    
+            <conifiguration>
+                <argLine>
+                -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                </argLine>
+                <suiteXmlFiles>
+                    <suiteXmlFile>rest_test.xml</suiteXmlFile>
+                </suiteXmlFiles>
+            </configuration
+
+under src/main/resouces: add properties allure.properties
+allure.results.directory = targte/allure-results
+
+Instead of RestAssured.given().log().all ----> RestAssured.given.filter(new AllureRestAssured()).log().all();
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Cucumber:
+--------
+
+    1. Add Adapter Plugin plugin = {"io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"}
+
+    To Run Cucumber Runner, Have your features, steps and runner all the framework packages in the test folder it will be executing RunnerClass
+
+    To Run the Cucumber Packages in the main folder, you have to provide argLine with suiteXmlFile in the Configuration. In the suiteXmlFile you need to provide the runner class contained xml file as below
+
+        <suite name="CucumberFile" >
+            <test name="cucuber_file">
+                <classes>
+                    <class name = "runner.RunnerClass" />
+                </classes>
+            </test>
+        </suite>
+
+        <suiteXmlFiles>
+            <suiteXmlFile>testng_cucumber.xml</suiteXmlFile>
+        <suiteXmlFiles>
+            
+        <argLine> -javaagent -Dcucumber.plugin = "io.qameta.allure.cucumber7Jvm.AllureCucumber7Jvm"</argLine>
+
+
+    To Run the Test alone:
+    ----------------------
+
+        mvn clean test -Dtest="RunnerClass"
+
+ ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+To Set System Properties in Pom:
+-------------------------------
+
+        <systemPropertyVariables>
+            <systemProperty>
+                <name>browser</name>
+                <value>chrome</value>   
+            </systemProperty>
+        </systemPropertyVariables>
+
+    <systemPropertyVariables>
+                    <greet.english>Hello</greet.english>
+                </systemPropertyVariables>
+                <systemProperties>
+                    <property>
+                        <name>greet.spanish</name>
+                        <value>Hola</value>
+                    </property>
+                    <property>
+                        <name>greet.spanish</name>
+                        <value>Hola</value>
+                    </property>
+                </systemProperties>
+                <systemPropertiesFile>src/test/resources/sample.properties</systemPropertiesFile>    
+
+
+    <configuration>
+        <systemPropertiesFile>src/test/resources/sample.properties</systemPropertiesFile>
+    </configuration>
+
+        call this using System.getProperty("browser");
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------    
+
+    
+            
+                
+
+

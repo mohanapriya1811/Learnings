@@ -1,0 +1,31 @@
+	Manual Testing:
+    --------------
+
+    Software: Set of Instructions coded in Programming language to Perform certain Task
+    
+            Types:
+            ------
+                1. System Software  -- Driver Software, Operating System
+                2. Application Software -- Microsoft Office, Eclipse, IntelliJ	
+
+
+    Software Testing:
+    ------------------
+            
+        Process of validating the software application the meets or exceeds the client requirement in order to find the defects in the application to produce quality product to the customer.
+
+    Testing Types:
+    -------------
+            Manual: Validating an application by giving inputs and checking the outputs manually
+            Automation: In order to reduce manual efforts for the repeated tasks Automating those functionalities
+
+    Test Approaches:
+    ----------------
+
+        White Box   -- Have to Know Internal Structure Need Programming Knowledge
+        Black Box   -- No Need to Know Internal Structure Just to Test an Application Functionality (Functional and Non Functional)
+        Grey Box    -- Both White and Black
+    
+    Testing Methods:
+    ---------------
+    

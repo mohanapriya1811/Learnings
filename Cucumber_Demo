@@ -1,0 +1,336 @@
+Cucumber:
+
+Cucumber is an automation tool to support Behavior Driven Development
+
+Why?:
+
+There is a communcation between the Business Team and Development Team. To bridge the gap between them Cucumber got evolved
+
+How?:
+
+Cucumber Plugin -- For Scripting
+Cucumber Dependency -- For Execution cucumber-java, cucumber-testng
+
+By Default Cucumber runs using Junit
+
+TDD: Test Driven Development
+----------------------------
+
+Test team writes the Test Cases and Development Team codes according to the written Test Cases
+
+Cons: Test Team focuses on Negative Scenarios rather giving attention to the Positive Scenarios
+
+
+ATDD: Acceptance Test Development
+---------------------------------
+
+Business Team provides acceptance Test Cases to the Development Team
+
+Development codes and tests according to the provided Test Cases
+
+Cons: Dev Team does not understand the Business Terms used by the Business Team
+
+
+
+BDD: Behavior Driven Development
+--------------------------------
+
+Both Business and Dev Team uses Commom Language is called Gherkin
+
+By the use of that language, both teams can understand the acceptance criteria according building the application
+
+Briding the communication gap between them
+
+
+Keywords:
+---------
+
+Feature: To Define the Functionality of the Application
+
+Scenario: To Describe the Functionality kinda Test Description/Summary
+
+Given: Pre-Condition
+
+When: Test Condition
+
+Then: Expected Result for Postive Scenarios
+
+But: Expected Result for Negative Scenarios
+
+And: Used as Conjunction to combine continous Given, When, Then, But
+
+Scenario Outline: To run the same scenario for different sets of data
+
+Examples: Come along with Scenario Outline. It carries the data that has to pass to the Test Case
+
+Background: To have Commom Precondition
+
+
+
+Implementation of Cucumber:
+
+Create Three Packages:
+    --feature
+            -- Create a File with the Extension .feature Ex:Login.feature
+
+        Login.feature:
+        -------------
+            Feature: Verify the Login Functionality of the Application
+            
+            Sceanrio: Verify if the user is able to Login to the Application with valid username and password
+
+            Given Open the Browser
+            Given Load the Application Url
+            Given Enter the username as Demosalesmanager
+            Given Enter the password as crmsfa
+            When Click on Login Button
+            Then Homepage should be Displayed
+    -------------------------------------------------------------------------------------------------------------------
+            Sceanrio: Verify if the user is able to Login to the Application with valid username and password
+
+            Given Open the Browser
+            Given Load the Application 'http://www.google.com'
+            Given Enter the username as 'Demosalesmanager'
+            Given Enter the password as 'crmsfa'
+            When Click on Login Button
+            Then Homepage should be Displayed
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+         Sceanrio Outline: Verify if the user is able to Login to the Application with valid username and password
+
+            Given Open the Browser
+            Given Load the Application 'http://www.google.com'
+            Given Enter the username as <username>
+            Given Enter the password as <password>
+            When Click on Login Button
+            Then Homepage should be Displayed
+            
+        Examples:
+        |username|password|
+        |'Demosalesmanager'|'crmsfa'|
+        |'DemoCSR'|'crmsfa'|
+            
+----------------------------------------------------------------------------------------------------------------------------------
+        -- steps
+            StepsDefinition.java
+            {
+                public static ChromeDriver driver;
+                @Given("Open the Browser")
+                public void openBrowser(){
+                    driver =  new ChromeDriver();
+                    driver.manage().window().maximize();
+                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+                }
+                @Given("Load the Application Url")
+                public void loadUrl(){
+                    driver.get("http://www.google.com");
+                }
+                @Given("Enter the username as Demosalesmanager")
+                public void enterUsername(){
+                    driver.findElement(By.id("username")).sendKeys("Demosalesmanager");
+                }
+
+                @Given("Enter the password as crmsfa")
+                public void enterPassword(){
+                    driver.findElement(By.id("password")).sendKeys("crmsfa");
+                }
+
+                @When("Click on Login Button")
+                public void clickLoginButton(){
+                    driver.findElement(By.className("decorativeSubmit")).click();
+                }
+
+                @Then("Homepage should be displayed")
+                public void verifyHomepage(){
+                    System.out.println(driver.getTitle());
+                }
+            }
+         ---------------------------------------------------------------------------------------------------------------------------
+
+
+             {
+                public static ChromeDriver driver;
+                @Given("Open the Browser")
+                public void openBrowser(){
+                    driver =  new ChromeDriver();
+                    driver.manage().window().maximize();
+                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+                }
+                @Given("Load the Application {string}")
+                public void loadUrl(String url){
+                    driver.get(url);
+                }
+                @Given("Enter the username as {string}")
+                public void enterUsername(String uName){
+                    driver.findElement(By.id("username")).sendKeys(uName);
+                }
+
+                @Given("Enter the password as {string}")
+                public void enterPassword(String pName){
+                    driver.findElement(By.id("password")).sendKeys(pName);
+                }
+
+                @When("Click on Login Button")
+                public void clickLoginButton(){
+                    driver.findElement(By.className("decorativeSubmit")).click();
+                }
+
+                @Then("Homepage should be displayed")
+                public void verifyHomepage(){
+                    System.out.println(driver.getTitle());
+                }
+            }
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+               -- runner
+
+                    
+                    @CucumberOptions(features="PathOfTheFeature", glue="steps", monochrome=true, publish=true)
+                    RunnerClass.java extends AbstractTestNGCucumberTest{
+                    
+                    }
+
+                features - path of feature file -- type {Array}
+                glue - To Define Steps --   type {} packagename.stepsName
+                monochrome Default False - To remove the unwanted junks in the console
+                publish to generate report
+                snippets - set the snippet method signature
+                dryRun - to compile feature file with step definition
+                pretty - formatting the console output
+                
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Regular  Expression and Cucumber Expression:
+--------------------------------------------
+
+        Regular Expression: used in Cucumber 1.X and 2.X Version
+        Cucumber Expression introduced in Cucumber 3.x version
+
+        Rules:
+
+        1. By default, Cucumber generates Cucumber Expression in the Step Definition Ex:{string}, {int}
+        2. Can have both Regular and Cucumber expression in a Feature File
+        3. Mix of Both we can have in a Feature File
+        4. We should not have mix of both in same method Ex: {string} & (\\d+)
+
+
+    ([0-9]) - () -- capture group- can have 0 - 9
+    
+    Quantifies: *, ?, +, {n}
+
+        + -- once or more
+        * -- zero or more
+        ? -- zero or once
+        {n} -- mentioned n times
+
+String -- "Apple Macbook Pro" -- \"([^\"]*)\"
+           
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Cons of Backgroud:
+------------------
+    With backgroud only applicable to specific feature file to have common pre condition alone
+    
+    To support common precondition and post condition to all the feature files in an application
+        Hooks is USED Ruby Language
+            Annotation @After and @Before to have Post Condition and Pre Condition
+
+
+    @Before(order = 1) ("@Smoke")
+    @Before(order = 2)
+     
+
+    @After(order = 1)
+    @After(order = 2)
+
+    @BeforeStep(order = 1)
+    @BeforeStep(order = 2)
+
+    @AfterStep(order = 1)
+    @AfterStep(order = 2)
+    
+    Hooks can be in the step definition or as separate Java Class. Hooks and Steps should not be extended
+        When we have Hooks Implementation should be in the Steps Package
+
+    If we have hooks in a separate package mention the runner class glue = {"steps", "hooks"}
+
+    
+    Conditional Hooks:
+     ------------------
+            Hooks with Tags is called as Conditional Hooks
+            @Before("@Smoke and not @Functional")
+            @After("@Smoke and not @Functional")
+
+     Globla Hooks:
+     -------------
+            @BeforeAll and @AfterAll
+    Step Hooks:
+    ----------
+        @BeforeStep and @AfterStep
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------      
+        
+Tags:
+----
+    Tags are used to categorize the feature file
+    In our project we have used Tags to categorize the featur files like @Smoke, @Sanity, @Regression
+    
+    tags  = '@Smoke'
+    tags  = '@Smoke and @Sanity'
+    tags  = '@Smoke or @Sanity'
+    tags  = '~@Smoke' or ' not @Smoke'
+
+Tag Inheritance:
+
+    Feature with Tag ---> Applicable to Scenario, Scenario Outline, and Examples
+    Scenario Outline with Tag ---> Applicable to Only Examples
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+To Run in CLI:
+--------------
+
+Alternatively if you are using a Maven project, you can run the CLI using the Exec Maven plugin:
+
+mvn exec:java   
+
+    -Dexec.classpathScope=test                 \
+    -Dexec.mainClass=io.cucumber.core.cli.Main \
+    -Dexec.args="/path/to/your/feature/files --glue hellocucumber --glue anotherpackage"
+
+
+java -cp "path/to/each/jar:path/to/compiled/.class/files" io.cucumber.core.cli.Main /path/to/your/feature/files --glue hellocucumber --glue anotherpackage
+
+
+
+cucumber.ansi-colors.disabled=  # true or false. default: false
+cucumber.execution.dry-run=     # true or false. default: false
+cucumber.execution.limit=       # number of scenarios to execute (CLI only).
+cucumber.execution.order=       # lexical, reverse, random or random:[seed] (CLI only). default: lexical
+cucumber.execution.wip=         # true or false. default: false.
+cucumber.features=              # comma separated paths to feature files. example: path/to/example.feature, path/to/other.feature
+cucumber.filter.name=           # regex. example: .*Hello.*
+cucumber.filter.tags=           # tag expression. example: @smoke and not @slow
+cucumber.glue=                  # comma separated package names. example: com.example.glue
+cucumber.plugin=                # comma separated plugin strings. example: pretty, json:path/to/report.json
+cucumber.object-factory=        # object factory class name. example: com.example.MyObjectFactory
+cucumber.snippet-type=          # underscore or camelcase. default: underscore
+
+NOTE THAT OPTIONS PROVIDED BY @CUCUMBEROPTIONS TAKE PRECEDENCE OVER THE PROPERTIES FILE AND CLI ARGUMENTS TAKE PRECEDENCE OVER ALL.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Generate Spark and Extent Pdf Reports
+------------------------------------
+
+    
+
+
+
+
+
+ 

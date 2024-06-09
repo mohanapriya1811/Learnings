@@ -1,0 +1,307 @@
+TestNG
+------
+
+    TestNG is Automation Framework which is used for Test Execution
+
+    Why?
+    ---
+        1. Support Data Driven Testing
+        2. Provide test configuration
+        3. Provide test logs and reporting
+    
+    How?
+    ----
+        1. TestNG Plugin - Execution
+        2. TestNG Dependency - Editor to develop script
+
+Features of TestNG:
+------------------
+
+    In Normal Java Method, We have the below Limitations
+        
+            1. Unable to run Multiple Testcases together with the Java Tcs
+            2. Unable to get Status of the Executed Testcases
+            3. Unable to rerun the failed testcases
+            4. Unable to Control Execution flow
+    
+
+    1. TestNG Testcases can be run single or multiple testcases together
+    2. Supports Serial and Parallel Execution
+    3. Test Configuration using Attributes
+    4. Controls the execution using Annotations
+    5. Supports Data Driven Testing
+    6. Supports Cross Browser Testing
+    7. Execute the Failed Testcases
+    8. Supports Report and Status of the Testcases
+
+Dependency TestNG:
+------------------
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.4.0</version>
+        </dependency>
+
+TestNG:
+ ------
+        
+    @Test is the annotation to represent the Testcase as TestNG Tc.
+    
+    public static void main(String args[]) --- public void run(){} with @Test annotation
+
+    
+    Select the TestNG Testcases - Right Click -- TestNG -- Convert to TestNG
+    
+    Right Click -- File - Name of the File with .xml
+
+        testng_sequential.xml
+        ----------------------
+
+            <suite name = "Suite" >
+                <test name = "Test" >
+                    <classes>
+                        <class name = "testcases.Login"></class>
+                        <class name = "testcases.CreateLead"></class>
+                    </classes>
+                </test>
+            </suite>
+
+        
+
+         testng_parallel.xml
+         --------------------
+
+            <suite name = "Suite">
+                <test name = "Test" parallel = "classes" >
+                    <classses>
+                        <class name = "testcases.Login" ></class>
+                        <class name = "testcases.CreateLead" ></class>
+                    </classes>
+                </test>
+            </suite>
+
+
+Thread-Count:
+------------
+
+        Thread Count is no of browsers to be opened to run the testcases in xml suite file
+        
+        By default it will open the browser based on the no of testcases
+        
+        To restrict the default testng provides thread-count with value 5.
+
+            Thread-Count:
+            -------------
+                    
+            <suite name = "Suite">
+                <test name = "Test" parallel = "classes" thread-count = "5" >
+                    <classses>
+                        <class name = "testcases.Login" ></class>
+                        <class name = "testcases.CreateLead" ></class>
+                    </classes>
+                </test>
+            </suite>
+
+Verbose:
+-------
+
+        To have the failure inforation log in the console we have an attribute called verbose.
+            
+            Verbose:
+            --------                    
+            <suite name = "Suite">
+                <test name = "Test" parallel = "classes" verbose = "5" >
+                    <classses>
+                        <class name = "testcases.Login" ></class>
+                        <class name = "testcases.CreateLead" ></class>
+                    </classes>
+                </test>
+            </suite> 
+        Range of verbose --- > 0 to 10 --- O -- Min and 10 -- Max..
+
+
+TestNG Annoations:
+-----------------
+
+        TestNG Annotation Meta Information to the Test Methods
+
+        Why?:
+        ---- 
+            To Control the Flow of Execution and Maintain the Order the Execution
+
+        How?:
+        ----
+            1.Simple to Learn Becasuse of Self Explanatory 
+            2.Easy to Maintain and Implement
+            3.Structured, Readable, and User Friendly Testcases
+
+Available Annotations:
+--------------------
+
+    @Before ---- Executes like Pre Condition
+    @After  ---- Executes like Post Condition
+
+    @BeforeSuite    -- Before the Suite  Before <Suite> tag is Opened
+    @BeforeTest     -- Before Every Test in the Suite  Before <Test> tag is Opened
+    @BeforeClass    -- Before all the classes in the Test Class/Before Current Class First method is invoked Before <class> tag is Opened
+    @BeforeMethod   -- Before Each Test Method Before <method> tag is Opened
+    @Test           -- Testcases
+    @AfterMethod    -- After Each Test Method After <method> tag is Closed
+    @AfterClass     -- After all the classes in the Test Class/ After all the Methods of Current Class in invoked After <class> tag is closed
+    @AferTest       -- After Every Test in the Suite After <Test> tag is Closed
+    @AfterSuite     -- After the Suite After <Suite> tag is Closed
+
+    Execution based on the XML Structure..
+
+    @BeforeClass and @AfterClass -- Check for the Methods in the Current Class if is not available takes it from Parent
+
+    Method Overring preferences to the Current Class @BeforeClass and @AfterClass
+
+    Method with Different Names : Current Class @BeforeClass and @AfterClass then Parent Class @BeforeClass and @AfterClass
+
+
+    @Test is Mandatory Annotation.
+
+
+   TestNG Attributes:
+    -----------------
+
+            Attributes to control the flow of exeution.
+            
+            1. alwaysRun 
+                        TC_0001 
+                        TC_0002 dependsOn TC_001 
+                        if(TC_001 fails) --- TC_0002 skips from Execution
+                        
+                        To Run TC_0002 set alwaysRun = true
+                            
+            2. dataProvider @Test(dataProvider = "fetchData", parallel = true)
+            3. dataProviderClass @Test(dataProvider = "fetchData", dataProviderClass = testcase.ReadExcelData.class)
+            4. dependsOnGroups 
+                    TC_0001 (groups = {"Smoke", "Functional"})
+                        TC_0002 (groups = {"Smoke"})
+                              TC_0003 (groups = {"Regression"})
+                                     TC_0004 @Test(dependsOnGroups = {"Smoke"})
+
+
+                     <suite name = "Suite_Group">
+                            <groups>
+                                  <run>
+                                     <include name = "Smoke"/>
+                                   </run>
+                            </groups>
+                                
+                         <test name = "Test" parallel = "classes" verbose = "5" >
+                             <packages>
+                                <package name = "testcases" ></package>
+                             </package>
+                        </test>
+                     </suite> 
+                        
+                            
+            5. dependsOnMethods
+            6. description
+            7. enabled
+            8. expectedExceptions
+            9. groups
+            10. invocationCount:
+                    Data-Type: int
+                    -- How many times a method is to be executed? based on InvocationCount
+                    -- default = 0;
+            11. timeOut default = 0 Type: int Time to provide a method to execute no of invocationCount times
+            12. invocationTimeOut
+            13. successPercentage
+            14. priority
+            15. singleThreaded
+            16. threadPoolSize
+
+   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Listeners: self explanatory listens to the test execution
+-----------
+
+    ITestListener   -- onStart, onFinish, onTestSuccess, onTestFailure, onTestFailedButSuccessPercentage, onTestSkipped, onTestStart, onTestFinish
+                        ITestContext context, ITestResult result
+    IReporter        -- generateReport(List<XmlSuite> xmlSuite , List<ISuite suite>, String outputDirectory)
+
+    ISuiteListener  -- onStart, onFinsh, ISuite suite
+    IHookable - 
+    IConfigurationListener onConfigurationSuccess, onConfigurationFailure, onConfigurationSkip ITestResult it
+    IConfigurableListener -- run(IConfigureCallBack callback, ITestResult result)
+    IInvocationMethod -- beforeInvocation afterInvocation IInvokeMethod method ITestResult result
+    IAnnotationTransformer transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod)
+    IExecution - To Start and End the Server 
+    IMethodInterceptor
+
+Class implements IRetryAnalyzer -->
+
+            public boolean retry(ITestResult result){
+                        int count = 0;
+    
+                        if(count<=2){
+                            return true;
+                            }
+                            return false;
+                           }
+Declartion at Class Level:
+
+Attribute @Test(retryAnalyer = PackageName.ClassName)  - Specific to Class
+
+Declaration at Suite Level:
+
+<listeners>
+<listener class-name="package.className">
+</listener>
+</listeners>
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+To Implement Retry Analyzeer whenever there is a failure: IAnnotationTransformer:
+
+class Implements IAnnotationTransformer{
+
+
+public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Methods testMethods){
+
+annotation.setRetryAnalyzer(IRetryAnalyzer.class)
+
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Include & Exclude Methods of Classes:
+------------------------------------
+Insead of enabled attribute we can configure through Xml File using Include (enabled = true )and Exclude (enabled = false)
+
+<classes>
+<class name = "package.className" >
+<methods>
+<include name = "methodName_One"/>
+<include name = "methodName_Two"/>
+<exclude name = "methodName_Three"/>
+<methods>
+</class>
+</classes>
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Multiple Suite Files Execution:
+-------------------------------
+
+<suite name = "Multiple Suites">
+    <suite-files>
+        <suite-file path = "pathofthefile"/>
+        <suite-file path = "pathofthefile" />
+    </suite-files>
+</suite>
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+preserve-order - To run the Xml File in unpredicatable Order
+
+@DataProvider(name = "fetchData", parallel = true);
+

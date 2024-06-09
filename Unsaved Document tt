@@ -1,0 +1,553 @@
+Selenium -- UI automation framework to test web application
+
+UI --- User Interface --- Selenium automates only Web Application
+
+
+WHY SELENIUM: Open Source and High Market Share, Transparency and Integration with Other tools
+
+WHEN: Functional and Regression Testing
+
+Tools:
+-----
+
+
+Selenium
+Playwright
+Cypress
+Puppeteer
+
+
+History:
+---------
+
+2004 - Selenium Core -- Jason Huggins -- Selenium RC and IDE
+2006 - WebDriver -- Simon Stewart
+2009 -- Merged Selenium core and WebDriver
+
+
+
+Selenium Components:
+-------------------
+
+Selenium Suite:
+
+Selenium IDE -- Same as Record and Play Back
+Selenium RC -- Stopped in Selenium 2
+Selenium WebDriver -- Mostly Used Component in Selenium
+Selenium Grid
+
+
+What Selenium can do?
+--------------------
+
+
+Selenium talk to any browser
+supports multiple OS
+works with all programming language
+
+
+
+What Selenium cant do?
+----------------------
+
+
+Selenium cannot talk to database-requires JAVA JDBC lib.
+will not desktop application -- To overcome Apache Poi as lib is used
+will not automate Mobile Application -- To overcome Appium as lib is used
+
+
+
+Driver is used to Interact with Browser using Test Script
+
+                 Driver (Request Using W3C Protocol)
+                    is a Mediator between Script and Browser
+
+
+Selenium Automation
+(Automation Script) --------------> Browser (Chrome) -- Built in Different Technology
+      using
+      JAVA          <--------------
+                    Response  
+
+We have Driver for every Browser 
+Chrome -- ChromeDriver
+FireFox -- Geckodriver
+
+Architecture:
+-------------
+
+Language Bindings --- W3c Protocol ---- Drivers ---- Browsers
+
+Three Thing Required to Automate:
+---------------------------------
+
+
+1. Selenium Lib has to be added in POM.xml
+2. Browser Driver (ChromeDriver, GeckoDriver)
+3. Browser has to be installed
+
+// Project Object Model -- POM.xml has maven dependency (Selenium)
+
+
+
+MAVEN -- is used to Dependency Management. Modify the files according to versions
+
+
+// To identify or locate a webelement in DOM (Document Object Model)
+Using 3 Ways:
+-------------
+
+1. Right Click -- Inspect
+2. Press F12
+3. Click on three dots on the browser -- click more tools -- developer settings -- ctrl+shift+I
+
+Ctrl + 2 + L to assign a webelement to a variable
+
+
+
+
+
+
+
+
+CSS Selector:
+----------
+
+tag#id
+tag.class
+tag[attribute=''];
+tag.class[attribute=''];
+
+4.17.0
+JasonWireProtocol
+
+Language    JsonWire Protocol           HTTp REQUEST
+Bindings    ----------------->  Driver  ------------> Browser
+                                        <----------------
+JAVA                                        HTTP Response
+RUBY
+JavaScript
+
+Components
+
+Selenium IDE -- Record and Play Back Tool
+Selenium RC - Became Selenium WebDriver
+Selenium Grid   - To support parallel execution in external machines
+Selenium WebDriver
+
+When?
+    To Reduce Manual Efforts
+
+Window Based Application
+Data Driven Testing
+Reporting 
+Test Execution - TestNG
+
+import org.openqa.selnium.WebDriver.Options;
+import org.openqa.selnium.WebDriver.Window;
+
+Options opt = driver.manage();
+
+Window win = opt.window();
+
+Timeouts tm = win.implicitlyWait(Duration.ofSeconds(30));
+
+
+List<WebElement> elements = driver.findElements(By.id(""));
+
+for(WebElement ele : elements){
+
+    if(ele.getText().equals("")){
+        ele.click();
+    }
+  }
+
+
+List<WebElement> row= driver.findElements(By.id("row"));
+
+List<WebElement> col = driver.findElements(By.id("col"));
+
+    for(int i = 0; i<row.size(); i++){
+
+        for(int j = 0; j<col.size(); j++){
+            
+           String text= driver.findElement(By.xpath("//tagName/tr[" +i+"]/td[" +j+"]")).getText();
+            System.out.prin(text);
+        }
+    System.out.println();
+    }
+
+String handle = driver.getWindowHandle();
+
+Set<String> handles = driver.getWindowHandles();
+
+List<String> newStr = new LinkedList<String>(handles);
+
+for(int i = newStr.size()-1; i>=0 i--){
+        driver.switchTo().window(newStr.get(i));
+        driver.close();
+    
+    }
+
+
+Select select = new Select(ele);
+
+select.selectByVisibleText(String text);
+select.selectByValue(String value);
+select.selectByIndex(int index);
+select.deselectAll();
+List<WebElement> ele = select.getOptions();
+
+
+
+driver.switchTo().frame(int i);
+driver.switchTo().frame(WebElement ele);
+driver.switchTo().frame(String idOrname);
+
+
+driver.switchTo().defaultContent();
+driver.switchTo().parentFrame();
+
+
+driver.navigate().to(");
+driver.navigate().forward();
+driver.navigate().back();
+driver.navigate().refresh();
+
+isEnabled();
+isDisplayed();
+isSelected();
+
+
+Actions action = new Actions(driver);
+
+action.moveToElement(ele).perform();
+action.clickAndHold(ele).moverToElement(ele2).release().perform();
+action.moveToElementByOffset().perform();
+action.doubleClick(ele).perform();
+action.dragAnddrop(source, target).perform();
+action.dragAndDropBy(source, x, y).perform();
+clickAndHold()
+dragANdDrop()
+dragAndDropBy()
+action.keyUP(KEYS.CONTROL); //Releasing
+action.keyDown(KEYS.CONTROL); //Pressing
+
+
+------------------------For Copying the Details-------------------------------------------
+
+
+action.keyDown(Keys.CONTROL);
+action.sendKeys("A");
+action.keyUp(Keys.CONTROL);
+action.perform();
+
+action.keyDown(Keys.CONTROL)
+action.sendKeys("C");
+action.keyUp(Keys.CONTROL);
+action.perform();
+
+action.keyDown(Keys.CONTROL);
+action.sendKeys("V");
+action.keyUp(Keys.CONTROL).perform();
+
+-----------------------For Pasting the Details----------------------------------------------
+
+action.contextClick(WebElement).perform();
+action.scrollToElement(ele).pause(Duration.ofSeconds(30)).click(uploadResume).perform();
+
+
+
+Sweet Alert -- Inspectable
+Modal and Non Modal
+
+Alert alert = driver.switchTo().alert();
+
+String str = alert.getText();
+alert.accept();
+alert().dismiss();
+
+
+driver.manage().timeouts.ImplicitlyWait(Duration.ofSeconds(30));
+------------------------------------------------------------------------------------------------------
+File source = ((JavascriptExecutor)driver/element).getScreenshotAs(OutputType.FILE);
+File destination = new File("Path");
+
+FileUtils.copyFile(source, destination);
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+BaseClass{
+   
+    public static ChromeDriver driver;    
+    @BeforeMethod
+    public void preCondition(){
+        driver = new ChromeDriver();
+        driver.manage().window().maximixe();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        driver.get("url");
+    }
+
+    @AfterMethod
+    public void postCondition(){
+        driver.close();
+    }
+}
+
+DependsOnMethods -- Have to specify both testcases 
+
+public class EdTechTestcases extends BaseClass{
+
+	@Test(dependsOnMethods = {"testcase1"})
+	public void testcase2() {
+		System.out.println("testcase2");
+
+	}
+
+}
+
+public class LeafTapsTestCases extends BaseClass {
+@Test
+	public void testcase1() {
+		System.out.println("testcase1");
+	}
+}
+----------------------------------------------------------------------------------------------------
+
+
+public class LearnPriority{
+	
+	@Test(enabled=false)
+	public void createLead() {
+		System.out.println("Create Lead");
+		throw new NoSuchElementException();
+
+	}
+	
+	@Test(priority = 1)
+		System.out.println("Edit Lead");
+	public void editLead() {
+
+	}
+	
+	@Test(priority = -1)
+	public void deleteLead() {
+		System.out.println("Delete Lead");
+
+	}
+
+}
+
+
+public class LearnDependsOnMethods {
+	
+	@Test(invocationCount = 4)
+	public void createLead() {
+		System.out.println("Create Lead");
+		throw new NoSuchElementException();
+
+	}
+	
+	
+
+}
+
+public class RetryEngine implements IRetryAnalyzer, IAnnotationTransformer{
+    int count = 0;
+    int max = 2;
+    @Override
+    public boolean retry(ITestResult result)
+    {
+        if(count<max){
+                count++;
+                return true;
+        }
+    return false;
+    }
+
+    public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod){
+        annotation.setReryAnalyzer(RetryEngine.class);
+    }
+}
+
+@Test(retryAnalyzer = RetryEngine.class)
+public class VerifyLogin{
+    
+   @Test
+    public void verifyLogin(){
+
+}
+}
+
+<listeners>
+<listener class-name = "package.RetryEngine.java" />
+<listeners>
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+class ListenerITest implements ITestListener{
+
+    public void onStart(ITestContext context){
+       System.out.println("I am Starting like Before Suite");
+    }
+
+
+     public void onFinish(ITestContext context){
+       System.out.println("I am Ending like After Suite");
+    }
+
+     public void onTestStart(ITestResult result){
+       System.out.println("I am Starting Before Test Starts");
+    }
+
+     public void onTestSuccess(ITestResult result){
+       System.out.println("I am for Passed");
+    }
+
+    public void onTestFailure(ITestResult result){
+       System.out.println("I am for Failed");
+    }
+    
+    public void onTestFinish(ITestResult result){
+       System.out.println("I am Finishing After Test Executes");
+    }
+     public void onTestFailedButSuccessPercentage(ITestResult result){
+       System.out.println("I am for Success Percentage");
+    }
+
+    public void onTestSkipped(ITestResult result){
+        System.out.println("I am Skipped");
+    }
+    }
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+IReporter
+
+public class Reporter implements IReporter{
+
+    public void generateReport(List<XmlSuite> XmlSuite, List<ISuite> suite, String outputDirectory){
+
+        for(ISuite sui : suite){
+            String suiteName = sui.getName();
+
+                Map<String, ISuiteResult> suiteResult = sui.getResults();
+                for(ISuiteResult result : suiteResult.values()){
+                    ITestContext context = result.getTestContext();
+                    System.out.println("Passed tests for suite '" + suiteName +
+               "' is:" + tc.getPassedTests().getAllResults().size());
+            System.out.println("Failed tests for suite '" + suiteName +
+               "' is:" + tc.getFailedTests().getAllResults().size());
+            System.out.println("Skipped tests for suite '" + suiteName +
+               "' is:" + tc.getSkippedTests().getAllResults().size());
+         }
+    }
+    }
+}
+    List<ISuite> suite
+                ISuite suites
+                    suite.getName(); //Suite Names
+                            Map<String, ISuiteResult> result  = suite.getResults
+                           ISuiteResult val =  result.values();
+                                    ITestContext con = val.getTestContext()
+                                        con.getPassedTests().getAllResults().size()
+
+<suite name="SuiteFiles">
+    <suite-files>
+        <suite-file path = "path of xml file one" />
+        <suite-file path = "path of xml file two" />
+    </suite-files>
+</suite>
+
+
+<suite name = "groups">
+    <groups name = "ImGroup" />
+        <run>
+            <include name = "Smoke" />
+            <exclude name = "Sanity" />
+        </run>
+    <groups>
+    
+    <test name = "includeExclude" >
+            <classes>
+            <class name = "testcaseOne" />
+            <class name = "testcaseTwo" />
+            </classes>
+    </test>
+</suite>
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+public class DataLibrary{
+    
+
+    public static String[][]/Object[][] / Map<Object, Object> readData(String fileName){
+        
+        XSSFWorkbook wbook = new XSSFWorkbook("Path of the Excel File");
+        XSSFSheet sheet = wbook.getSheetAt(0); or wbook.getSheetAt("SheetName");
+        
+            int row = sheet.getLastRowNum(); // or sheet.getPhysicalNumberOfRows();
+            int col = sheet.getRow(0).getLastCellNum();
+        
+        String[][] data  = new String[row][col];
+
+        Map<Object, Object> data = new HashMap<Object, Object>();
+
+        for(int i = 1; i<row; i++){
+            for(int j = 0; j<col; j++){
+            data[i-1][j] = sheet.getRow(i).getCell(j).getStringCellValue(); 
+            data.put(sheet.getRow(0).getCell(j).getStringCellValue(), data[i-1][j]);
+            }
+            }
+       return data;
+    }
+}
+
+@DataProvider(name = "fetchData" parallel =true) // if you dont give name it take it as method name as default name
+public String[][] getData()throws IOException, FileNotFoundEception{
+    return DataLibrary.readData();
+}
+
+@Test(dataProvider = "fetchData")
+public void createLead(String uName, String password, String firstName, String lName)
+ 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
+Javascript Executor Scripts:
+---------------------------
+
+    To Click :      JavascriptExecutor js = ((JavascriptExecutor) driver);
+                    js.executeScript("arguments[0].click();", ele);
+
+                    (or)
+
+                    js.executeScript("document.getElementById('username').click();");
+    
+    To Set Values:  JavascriptExecutor js = ((JavascriptExecutor) driver);
+                    js.executeScript("document.getElementById('username').values ='username'");
+
+    To Highlight:   js.executeScript("arguments[0].setAttribute('style', arguments[1]);", ele, " color: Red; border: 10 px dotted Solid Blue;");
+
+    To Scroll:      js.executeScript("window.scrollBy(0, 200)"); Vertical
+                    js.executeScript("window.scrollBy(200, 0)"); Horizontal
+                    js.executeScript("arguments[0].scrollIntoView();", ele);
+                    js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+                    js.executeScript("window.scrollTo(document.body.scrollWidth, 0)");
+
+
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+wait.until(ExpectedConditions.elementToBeClickable(ele));
+
+
+FluenWait fWait = new FluentWait(driver);
+
+fwait.withTimeout(Duration.ofSeconds(30));
+fwait.pollingEvery(Duration.ofmilliSeconds(20)
+ignoring(NoSuchElementException.class);   
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+

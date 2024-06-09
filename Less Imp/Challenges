@@ -1,0 +1,68 @@
+BaseTestNG:
+----------
+long startTime;
+long endTime;
+int num, specialCharacter, letters;
+
+public void start(){
+num = 0; specialCharacter = 0; letters = 0;
+startTime = System.nanoTime();
+
+}
+
+public void end(){
+
+endTime = System.nanoTime();
+timeTotal = endTime - startTime;
+
+}
+
+
+ChromeOptions option = new ChromeOptions();
+
+option.addArguments("--headless");
+option.addArguments("--incognito");
+option.addArguments("--disable-notifications");
+option.addArguments("--start-maximized");
+option.addArguments("--start-
+fullscreen");
+option.addArguments("--disable-infobar");
+
+
+Element Highlight:
+-----------------
+
+driver.executeScript("arguments[0].setAttribute('style', arguments[1]);", checkIn, "color: yellow; border: 10px dotted green;");
+
+
+Dynamic Data
+----------------
+
+Faker fake = new Faker();
+
+String uName = fake.name().username();
+
+String fName = fake.name().firstname();
+
+String lName = fake.name().lastname();
+
+String email = fName +"." + lName + "@abc.com";
+
+
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
+wait.until(ExpectedConditions.elementToBeClickable(ele));
+
+
+
+Wait wait = new FluentWait(driver)
+.withTimeout(Duration.ofSeconds(20))
+.pollingEvery(Duration.ofMilliSeconds(250))
+.ignoring(NoSuchElementException.class);
+
+
+
+
+
+
+

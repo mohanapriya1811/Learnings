@@ -1,0 +1,49 @@
+Framework Explanation in Automation:
+---------------------------------
+In our project, We have used to Page Object Model as Design Pattern. To have browser interaction we have used Selenium WebDriver, to Execute the test scripts we have used TestNG. To support data driven testing we have Apache POI. To support to user acceptance testing we have Cucumber. For reporting we have used ExtentReports. pages package had all the pages as java class with resuable methods and webelements related to the pages. We had two interfaces browser and element, Browser has all the browser related unimplemented methods and Element interdace has all the Element related unimplement methods. SeleniumBase is a Java which implements Browser and Element interface with Implementation of Browser and Element methods. SeleniumBase class is a Wrapper Class on top of Selenium methods created methods and using it as library for our project. ProjectSpecificMethods is class which has common methods to the testcases with testng annotations.  testcases package has all the testcases that are all extended by projetSpecificMethods. utils package has Reporter class which has reports related code and Retry to support rerun of failed testcases and DataLibrary to support data driven testing. 
+
+Hierarchy:
+
+AbstractTestNGCucumberTests
+    
+    DriverInstance
+
+        Reporter (startReport) 
+        
+           SeleniumBase
+                
+                 ProjectSpecificMethods 
+                                    
+                   Pages & Testcases
+    
+                
+Execution Flow:
+-----------------                       
+@BeforeSuite -- startReport()
+
+    @BeforeTest - setValue()
+        
+        @BeforeClass - startTestCase()            
+                                
+            @DataProvider - fectchData()
+                
+                @BeforeMethod - preCondition()
+                    
+                        @Test                 
+                @AfterMethod - postCondition()
+        
+        @AfterClass   
+
+    @AfterTest
+
+@AfterSuite -- endReport()
+
+
+
+                        
+                                    
+
+
+
+                        
+        
